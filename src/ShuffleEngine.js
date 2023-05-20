@@ -24,6 +24,11 @@ export class ShuffleEngine {
          * @property {Array} waitingSongs 再生待ちの曲の配列を生成する際に使用する仮の配列
          */
         this.waitingSongs = [[],[]];
+
+        /**
+         * @property {boolean} isFirstRound 1巡目の再生時はtrue、2巡目以降はfalse
+         */
+        this.isFirstRound = true;
     }
 
     /**
@@ -59,6 +64,9 @@ export class ShuffleEngine {
         // （generatePlaylistは2巡分シャッフルしたリストを生成するので、残りの曲が1巡分になった時が1巡再生終了のタイミング）
         if (this.generatedPlaylist.length === this.songs.length){
             this.generatePlaylist();
+            if (this.isFirstRound === true) {
+                this.isFirstRound = false;
+            }
         }
         const next_song = this.generatedPlaylist[0];
 
@@ -84,10 +92,10 @@ export class ShuffleEngine {
         const orgOrder = this.songs.map((song) => song.id);
         const shuffledOrder = [...orgOrder];
         // 元の曲順と同じだった場合、または
-        // 1曲目が1番目の曲になった場合はシャッフルをやり直す
+        // 1巡目の1曲目が、セットした曲の1番目の曲になった場合はシャッフルをやり直す
         while (
             (JSON.stringify(shuffledOrder) === JSON.stringify(orgOrder)) ||
-            (shuffledOrder[0] === orgOrder[0])
+            (this.isFirstRound && shuffledOrder[0] === orgOrder[0])
         ){
             for (let i = shuffledOrder.length - 1; i >= 0; i--) {
                 let random_num = Math.floor(Math.random() * (i + 1));

@@ -123,7 +123,6 @@ describe("ShuffleEngine getNextSong", () => {
             const currentSong = playList.getNextSong();
             expect(currentSong).not.toEqual(playedSongs[i]);
             playedSongs.push(currentSong);
-            // console.log(`Now playing... ${currentSong.title} (by ${currentSong.artist})`);
         }
     });
 
@@ -192,9 +191,27 @@ describe("ShuffleEngine シャッフル", () => {
         }
     });
 
-    test("1曲目が1番目の曲になっていないこと", () => {
-        for ( let i = 0; i < tracks.length-1; i++) {
-            expect(tracks[i][0].id).not.toBe(1);
+    test("1巡目の時はisFirstRoundがtrueとなり、2巡目以降はfalseとなること", () => {
+
+        const playList = new ShuffleEngine();
+        playList.setSongs(sampleSongs);
+
+        for ( let i = 0; i < 10; i++) {
+            playList.getNextSong();
+            if ( i < sampleSongs.length ) {
+                expect(playList.isFirstRound).toBeTruthy();
+            } else {
+                expect(playList.isFirstRound).toBeFalsy();
+            }
+        }
+    });
+
+    test("1巡目の1曲目が、セットした曲の1番目の曲になっていないこと", () => {
+        for ( let i = 0; i < 10; i++) {
+            const playList = new ShuffleEngine();
+            playList.setSongs(sampleSongs);
+            const firstSong = playList.getNextSong();
+            expect(firstSong.id).not.toBe(1);
         }
     });
 });
