@@ -8,24 +8,24 @@ const sampleSongs = [
     new Song("Uptown Funk(feat. Bruno Mars)","Mark Ronson"),
     new Song(22,"Taylor Swift"),
     new Song("Problem(feat. Iggy Azalea)"),
+    new Song("Boyfriend", "Ariana Grande & Social House"),
+    new Song("Dirty Work", "Austin Mahone"),
 ];
 const playList = new ShuffleEngine();
 
 export const Player = () => {
     const [currentSong, setCurrentSong] = useState(null);
-    const [upcomingSongs, setUpcomingSongs] = useState([]);
+    const [upNextSongs, setUpNextSongs] = useState([]);
     const [hasSongs, setHasSongs] = useState(false);
 
     const onClickSet = () => {
         playList.setSongs(sampleSongs);
         setHasSongs(true);
-        console.log(playList);
     };
 
     const onClickPlay = () => {
         setCurrentSong(playList.getNextSong());
-        setUpcomingSongs(() => playList.peekQueue());
-        console.log(playList);
+        setUpNextSongs(() => playList.peekQueue());
     };
 
     return (
@@ -37,27 +37,27 @@ export const Player = () => {
             ) : null}
             {currentSong ? (
                 <>
-                <h2>Now playing</h2>
-                <dl className="currentsong">
+                <h2>Now Playing</h2>
+                <dl className="current">
                     <dt>{currentSong.title}</dt>
-                    <dd className="artistname">{currentSong.artist}</dd>
+                    <dd className="artist">{currentSong.artist}</dd>
                 </dl>
                 <p></p>
                 </>
             ) : null}
-            {upcomingSongs.length > 0 && (
+            {upNextSongs.length > 0 && (
                 <>
-                <h3>Upcoming songs</h3>
-                <dl className="upcomingsongs">{upcomingSongs.length > 0 && (
-                    upcomingSongs.map((map, index) => {
+                <h3>Up Next</h3>
+                {upNextSongs.length > 0 && (
+                    upNextSongs.map((map, index) => {
                         return map === undefined ? null : (
-                            <>
-                            <dt key={index}>{map.title}</dt>
-                            <dd className="artistname">{map.artist}</dd>
-                            </>
+                            <dl key={index} className="upnext">
+                                <dt>{map.title}</dt>
+                                <dd className="artist">{map.artist}</dd>
+                            </dl>
                         )
                     })
-                )}</dl>
+                )}
                 </>
             )}
         </div>

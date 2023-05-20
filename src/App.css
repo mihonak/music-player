@@ -12,24 +12,24 @@ h2, h3 {
   border-bottom: #bd93f9 solid 1px;
 }
 dl {
+  margin: 0;
   padding: 16px;
   border-radius: 3px;
 }
-dl.currentsong {
+dl.current {
   background: #44475a;
 }
-dl.currentsong dt {
+dl.current dt {
   padding: 0 0 6px;
   font-size: x-large;
 }
-dd.artistname {
+dd.artist {
   margin: 0;
   padding: 0;
   text-align: right;
   font-size: smaller;
 }
-dl.upcomingsongs dd.artistname {
-  margin: 0 0 16px;
+dl.upnext dd.artist {
   border-bottom: #44475a solid 1px;
 }
 ul {
