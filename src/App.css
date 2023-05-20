@@ -1,38 +1,52 @@
-.App {
-  text-align: center;
+body {
+  background-color: #282a36;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+div.player {
+  padding: 16px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1,h2,h3,p,li,dl {
+  color:#f8f8f2;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+h2, h3 {
+  border-bottom: #bd93f9 solid 1px;
 }
-
-.App-link {
-  color: #61dafb;
+dl {
+  padding: 16px;
+  border-radius: 3px;
+  background: #44475a;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+dt {
+  font-size: x-large;
+  font-weight:bold;
+  padding: 0 0 6px;
+}
+dd{
+  margin: 0;
+  padding: 0;
+  text-align: right;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+li {
+  margin: 16px 0;
+  padding: 0;
+  list-style-type: none;
+}
+span.artistname {
+  padding: 0 0 0 6px;
+  font-size: smaller;
+}
+button {
+  margin: 0 6px 0 0;
+  padding: 6px 16px;
+  border-radius: 3px;
+  border: none;
+  background: #44475a;
+  color:#f8f8f2;
+}
+button:hover {
+  background: #6272a4;
+  cursor: pointer;
 }
