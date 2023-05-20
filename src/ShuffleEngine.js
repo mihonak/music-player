@@ -4,11 +4,16 @@
 export class ShuffleEngine {
 
     /**
-     * @type {number} PEEK_MAX 先読みする上限値
+     * @property {number} PEEK_MAX 先読みする上限値
      */
     static PEEK_MAX = 5;
 
     constructor () {
+
+        /**
+         * @property {Array} songs セットされた曲の配列
+         */
+        this.songs = [];
 
         /**
          * @property {Array} generatedPlaylist 再生待ちの曲の配列
@@ -29,7 +34,7 @@ export class ShuffleEngine {
         try {
             if ( ! Array.isArray(songs)) {
                 throw new Error("setSongsの引数の型が不正です。配列を渡してください。");
-            } else if (songs.length == 0) {
+            } else if (songs.length === 0) {
                 throw new Error("setSongsに渡す引数の配列が空です。");
             }
             this.songs = songs.map((song, index) => ({
@@ -52,7 +57,7 @@ export class ShuffleEngine {
     getNextSong() {
         // 1巡再生し終わったら、曲順の比較のために次のリストを生成する
         // （generatePlaylistは2巡分シャッフルしたリストを生成するので、残りの曲が1巡分になった時が1巡再生終了のタイミング）
-        if (this.generatedPlaylist.length == this.songs.length){
+        if (this.generatedPlaylist.length === this.songs.length){
             this.generatePlaylist();
         }
         const next_song = this.generatedPlaylist[0];
@@ -68,9 +73,7 @@ export class ShuffleEngine {
      * @returns {Array} - PEEK_MAXの長さの配列
      */
     peekQueue() {
-        return [...Array(this.constructor.PEEK_MAX).keys()].map((v)=>{
-            return this.generatedPlaylist[v];
-        })
+        return [...Array(this.constructor.PEEK_MAX).keys()].map((v)=>this.generatedPlaylist[v]);
     }
 
     /**
@@ -83,8 +86,8 @@ export class ShuffleEngine {
         // 元の曲順と同じだった場合、または
         // 1曲目が1番目の曲になった場合はシャッフルをやり直す
         while (
-            (JSON.stringify(shuffledOrder) == JSON.stringify(orgOrder)) ||
-            (shuffledOrder[0] == orgOrder[0])
+            (JSON.stringify(shuffledOrder) === JSON.stringify(orgOrder)) ||
+            (shuffledOrder[0] === orgOrder[0])
         ){
             for (let i = shuffledOrder.length - 1; i >= 0; i--) {
                 let random_num = Math.floor(Math.random() * (i + 1));
@@ -93,9 +96,7 @@ export class ShuffleEngine {
                 shuffledOrder[random_num] = tmp;
               }
         }
-        return [...this.songs].sort((x, y) => {
-            return shuffledOrder.indexOf(x.id) - shuffledOrder.indexOf(y.id);
-        });
+        return [...this.songs].sort((x, y) => shuffledOrder.indexOf(x.id) - shuffledOrder.indexOf(y.id));
     }
 
     /**
@@ -103,30 +104,35 @@ export class ShuffleEngine {
      * @returns {void}
      */
     generatePlaylist() {
-        if (this.songs.length == 2) {
-            if (this.waitingSongs[0].length == 0) {
-                if (Math.floor(Math.random() * 2) == 0) {
+
+        // セットされた曲数が1曲しかなかった場合は、その曲を繰り返し再生する
+        if (this.songs.length === 1) {
+            this.waitingSongs[0] = [...this.songs];
+            this.waitingSongs[1] = [...this.songs];
+
+        // セットされた曲数が2曲しかなかった場合は、開始曲をランダムに決定した上で交互に再生する
+        } else if (this.songs.length === 2) {
+            if (this.waitingSongs[0].length === 0) {
+                if (Math.floor(Math.random() * 2) === 0) {
                     this.waitingSongs[0] = [...this.songs];
-                    this.waitingSongs[1] = [...this.songs].reverse();
+                    this.waitingSongs[1] = [...this.songs];
                 } else {
                     this.waitingSongs[0] = [...this.songs].reverse();
-                    this.waitingSongs[1] = [...this.songs];
+                    this.waitingSongs[1] = [...this.songs].reverse();
                 }
             } else {
-                if (this.waitingSongs[0][0].id == 1) {
+                if (this.waitingSongs[0][0].id === 1) {
                     this.waitingSongs[0] = [...this.songs];
-                    this.waitingSongs[1] = [...this.songs].reverse();
+                    this.waitingSongs[1] = [...this.songs];
                 } else {
                     this.waitingSongs[0] = [...this.songs].reverse();
-                    this.waitingSongs[1] = [...this.songs];
+                    this.waitingSongs[1] = [...this.songs].reverse();
                 }
             }
 
-        } else if (this.songs.length == 1) {
-            this.waitingSongs[0] = [...this.songs];
-            this.waitingSongs[1] = [...this.songs];
+        // セットされた曲数が3曲以上だった場合は、シャッフルを行う
         } else {
-            if (this.waitingSongs[0].length == 0) {
+            if (this.waitingSongs[0].length === 0) {
                 this.waitingSongs[0] = this.shuffleSongs();
             }else {
                 this.waitingSongs[0] = [...this.waitingSongs[1]];
@@ -136,8 +142,8 @@ export class ShuffleEngine {
             // n巡目の最後の曲とn+1巡目の最初の曲が同じになった場合、または
             // n巡目とn+1巡目の曲順が全く同じだった場合はシャッフルをやり直す
             while (
-                (this.waitingSongs[0].slice(-1)[0].id == this.waitingSongs[1][0].id) ||
-                (JSON.stringify(this.waitingSongs[0].map((song) => song.id)) == JSON.stringify(this.waitingSongs[1].map((song) => song.id)))
+                (this.waitingSongs[0].slice(-1)[0].id === this.waitingSongs[1][0].id) ||
+                (JSON.stringify(this.waitingSongs[0].map((song) => song.id)) === JSON.stringify(this.waitingSongs[1].map((song) => song.id)))
             ){
                 this.waitingSongs[1] = this.shuffleSongs();
             }
