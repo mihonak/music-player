@@ -6,6 +6,7 @@ div.player {
 }
 h1,h2,h3,p,li,dl {
   color:#f8f8f2;
+  font-weight: normal;
 }
 h2, h3 {
   border-bottom: #bd93f9 solid 1px;
@@ -13,17 +14,23 @@ h2, h3 {
 dl {
   padding: 16px;
   border-radius: 3px;
+}
+dl.currentsong {
   background: #44475a;
 }
-dt {
-  font-size: x-large;
-  font-weight:bold;
+dl.currentsong dt {
   padding: 0 0 6px;
+  font-size: x-large;
 }
-dd{
+dd.artistname {
   margin: 0;
   padding: 0;
   text-align: right;
+  font-size: smaller;
+}
+dl.upcomingsongs dd.artistname {
+  margin: 0 0 16px;
+  border-bottom: #44475a solid 1px;
 }
 ul {
   margin: 0;
@@ -33,10 +40,6 @@ li {
   margin: 16px 0;
   padding: 0;
   list-style-type: none;
-}
-span.artistname {
-  padding: 0 0 0 6px;
-  font-size: smaller;
 }
 button {
   margin: 0 6px 0 0;

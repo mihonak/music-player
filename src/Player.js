@@ -38,9 +38,9 @@ export const Player = () => {
             {currentSong ? (
                 <>
                 <h2>Now playing</h2>
-                <dl>
+                <dl className="currentsong">
                     <dt>{currentSong.title}</dt>
-                    <dd><span className="artistname">{currentSong.artist}</span></dd>
+                    <dd className="artistname">{currentSong.artist}</dd>
                 </dl>
                 <p></p>
                 </>
@@ -48,13 +48,16 @@ export const Player = () => {
             {upcomingSongs.length > 0 && (
                 <>
                 <h3>Upcoming songs</h3>
-                <ul>{upcomingSongs.length > 0 && (
+                <dl className="upcomingsongs">{upcomingSongs.length > 0 && (
                     upcomingSongs.map((map, index) => {
                         return map === undefined ? null : (
-                            <li key={index}>{map.title}<span className="artistname">(by {map.artist})</span></li>
+                            <>
+                            <dt key={index}>{map.title}</dt>
+                            <dd className="artistname">{map.artist}</dd>
+                            </>
                         )
                     })
-                )}</ul>
+                )}</dl>
                 </>
             )}
         </div>
