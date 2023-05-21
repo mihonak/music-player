@@ -6,26 +6,25 @@ describe("Song クラス", () => {
         expect(Song).toBeDefined();
     });
 
-    test("Songにはタイトルとアーティスト名が格納されること", () => {
-        expect(new Song("Carnival", "The Cardigans")).toEqual({
+    test("Songにはタイトルとアーティスト名、及びIDが格納されること", () => {
+        expect(new Song("Carnival", "The Cardigans", 1)).toEqual({
+            "id":1,
             "title":"Carnival",
-            "artist":"The Cardigans"
+            "artist":"The Cardigans",
         });
     });
 
-    test("タイトルやアーティスト名が数字であっても文字列として格納すること", () => {
-        expect(new Song(22,"Taylor Swift")).toEqual({
-            "title": "22",
-            "artist": "Taylor Swift",
-        });
-        expect(new Song("あの紙ヒコーキ　くもり空わって",19)).toEqual({
-            "title": "あの紙ヒコーキ　くもり空わって",
-            "artist": "19",
+    test("IDがセットされていない場合は、IDはnullのまま格納されること", () => {
+        expect(new Song("Carnival", "The Cardigans")).toEqual({
+            "id":null,
+            "title":"Carnival",
+            "artist":"The Cardigans",
         });
     });
 
     test("アーティスト名がセットされていない場合はアーティスト名にUnknown Artistをセットすること", () => {
         expect(new Song("Problem(feat. Iggy Azalea)")).toEqual({
+            "id":null,
             "title": "Problem(feat. Iggy Azalea)",
             "artist": "Unknown Artist",
         });

@@ -2,17 +2,16 @@
  * Song クラス
  */
 export class Song {
-    constructor (title, artist='Unknown Artist') {
 
-        /**
-         * @property {string} title 曲のタイトル
-         */
-        this.title = String(title);
+    /**
+     * @param {string} title 曲のタイトル
+     * @param {string} [artist=Unknown Artist] アーティスト名
+     * @param {number} [id=null] ShuffleEngineで利用するid
+     */
+    constructor (title, artist="Unknown Artist", id=null) {
 
-        /**
-         * @property {string} artist アーティスト名
-         */
-        this.artist = String(artist);
-
+        this.title = title;
+        this.artist = artist;
+        this.id = id;
     }
 }

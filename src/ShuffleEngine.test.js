@@ -21,25 +21,13 @@ describe("ShuffleEngine setSongs", () => {
         expect(playList.setSongs).toBeDefined();
     });
 
-    test("シャッフル対象の曲の配列をインスタンスに設定すること", () => {
+    test("シャッフル対象の曲の配列をセットし、セットされた順にIDを付与すること", () => {
         const playList = new ShuffleEngine();
         playList.setSongs(sampleSongs);
         expect(playList.songs).toStrictEqual([
-            {
-                "id": 1,
-                "title": "Sunday Morning",
-                "artist": "Maroon 5",
-            },
-            {
-                "id": 2,
-                "title": "Kiss Me More(feat. SZA)",
-                "artist": "Doja Cat",
-            },
-            {
-                "id": 3,
-                "title": "Uptown Funk(feat. Bruno Mars)",
-                "artist": "Mark Ronson",
-            },
+            new Song("Sunday Morning", "Maroon 5", 1),
+            new Song("Kiss Me More(feat. SZA)", "Doja Cat", 2),
+            new Song("Uptown Funk(feat. Bruno Mars)", "Mark Ronson", 3),
         ]);
     });
 

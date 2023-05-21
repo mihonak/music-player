@@ -4,36 +4,28 @@
 export class ShuffleEngine {
 
     /**
-     * @property {number} PEEK_MAX 先読みする上限値
+     * @property {number} PEEK_MAX 先読みする曲数の上限値
      */
     static PEEK_MAX = 5;
 
+    /**
+     * @property {Array<Song>} songs セットされた曲の配列(曲順はセットされた時点の順序)
+     * @property {Array<Song>} generatedPlaylist シャッフルされた再生待ちの曲の配列
+     * @property {Array<Song>} waitingSongs 再生待ちの曲の配列を生成する際に使用する仮の配列
+     * @property {boolean} isFirstRound 現在1巡目であるかどうかのフラグ
+     */
     constructor () {
-
-        /**
-         * @property {Array} songs セットされた曲の配列
-         */
         this.songs = [];
-
-        /**
-         * @property {Array} generatedPlaylist 再生待ちの曲の配列
-         */
         this.generatedPlaylist = [];
-
-        /**
-         * @property {Array} waitingSongs 再生待ちの曲の配列を生成する際に使用する仮の配列
-         */
         this.waitingSongs = [[],[]];
-
-        /**
-         * @property {boolean} isFirstRound 1巡目の再生時はtrue、2巡目以降はfalse
-         */
         this.isFirstRound = true;
     }
 
     /**
-     * @property {Function} setSongs シャッフル対象の曲の配列をインスタンスに設定する
+     * @property {Function} setSongs シャッフル対象の曲の配列をインスタンスに設定する関数
+     * @param {Array<Song>} songs Songクラスのオブジェクトからなる配列
      * @returns {void}
+     * @throws {Exception} 配列以外のものが渡された場合や配列が空の場合はエラーを投げる
      */
     setSongs(songs) {
         try {
@@ -42,11 +34,10 @@ export class ShuffleEngine {
             } else if (songs.length === 0) {
                 throw new Error("setSongsに渡す引数の配列が空です。");
             }
-            this.songs = songs.map((song, index) => ({
-                id: index+1,
-                title: song.title,
-                artist: song.artist,
-            }));
+            // セットされた順にIDを付与する（shuffleSongs等シャッフル状況を確認する際に利用）
+            this.songs = [...songs];
+            this.songs.map((song, index) => song.id = index+1);
+
             this.waitingSongs = [[],[]];
             this.generatePlaylist();
         } catch(e){
@@ -56,8 +47,8 @@ export class ShuffleEngine {
     }
 
     /**
-     * @property {Function} - 次に再生する曲を返す。次に返す曲が更新される
-     * @returns {Object} - 次に再生する曲
+     * @property {Function} - 次に再生する曲を返し、次に返す曲が更新される関数
+     * @returns {Song} - 次に再生する曲のSongクラスオブジェクト
      */
     getNextSong() {
         // 1巡再生し終わったら、曲順の比較のために次のリストを生成する
@@ -77,16 +68,16 @@ export class ShuffleEngine {
     }
 
     /**
-     * @property {Function} - この後再生する予定の曲を返す
-     * @returns {Array} - PEEK_MAXの長さの配列
+     * @property {Function} - この後再生する予定の曲の配列を返す関数
+     * @returns {Array<Song>} - SongクラスのオブジェクトからなるPEEK_MAXの長さの配列
      */
     peekQueue() {
         return [...Array(this.constructor.PEEK_MAX).keys()].map((v)=>this.generatedPlaylist[v]);
     }
 
     /**
-     * @property {Function} - セットされた曲の順番をランダムにシャッフルしたリストを生成する
-     * @returns {Array} - シャッフルされた曲のリスト
+     * @property {Function} - セットされた曲の順番をランダムにシャッフルしたリストを生成する関数
+     * @returns {Array<Song>} - 順番がシャッフルされたSongクラスのオブジェクトのリスト
      */
     shuffleSongs() {
         const orgOrder = this.songs.map((song) => song.id);
@@ -108,7 +99,7 @@ export class ShuffleEngine {
     }
 
     /**
-     * @property {Function} - シャッフルしたプレイリストを生成してgeneratedPlaylistを更新する(同じ曲順で繰り返されることを防ぐために2巡分のリストを生成しています)
+     * @property {Function} - シャッフルしたプレイリストを生成してgeneratedPlaylistを更新する関数<br>(同じ曲順で繰り返されることを防ぐため2巡分のリストを生成)
      * @returns {void}
      */
     generatePlaylist() {
