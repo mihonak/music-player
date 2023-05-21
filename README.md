@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+# 採用課題
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 課題 1 (コーディング)
 
-## Available Scripts
+ソースコードの格納先は下記の通りです。
 
-In the project directory, you can run:
+### 課題の対象となるコード
 
-### `npm start`
+* /src/Song.js
+* /src/ShuffleEngine.js
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### テストコード
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* /src/Song.test.js
+* /src/ShuffleEngine.test.js
 
-### `npm test`
+## 課題 2 (シャッフルの工夫)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 1. シャッフルした結果が最初に渡された曲順と同一だったらやり直す
 
-### `npm run build`
+根拠: 例えばアルバムに収録された楽曲のリストだった場合、そのままの順序で再生されるとシャッフルされた印象が全くないため
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+#### 2. 1巡目の1曲目が、セットした曲の1番目の曲だったらやり直す
+根拠: 1と同様に、アルバムに収録された楽曲のリストだった場合、最初に1番目の曲が流れると、次の曲が始まるまでシャッフルされた印象が持てず、シャッフルし直そうかと思わせてしまう可能性があるため
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+#### 3. n巡目の最後の曲とn+1巡目の曲が同一だったらやり直す
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+根拠: リスナが同じ曲を連続で聴くことになってしまうため
 
-### `npm run eject`
+#### 4. セットされた曲数が2曲の場合は、そのどちらかの曲を最初にして交互に再生し、セットされた曲数が1曲の場合はリピート再生する
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+根拠: セットされた曲が2曲以下の場合はシャッフルするのに十分な曲数ではないが、エラーを返すのではなく曲を再生することがリスナにとって最優先事項であると推測したため
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 課題 3 (説明資料)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+本ページの右上のリンクよりご参照いただけます。
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* /out/Song.html
+* /out/ShuffleEngine.html
