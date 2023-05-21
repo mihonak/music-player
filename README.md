@@ -36,5 +36,5 @@
 
 本ページの右上のリンクよりご参照いただけます。
 
-* /out/Song.html
-* /out/ShuffleEngine.html
+* /docs/Song.html
+* /docs/ShuffleEngine.html
