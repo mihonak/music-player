@@ -11,7 +11,7 @@ export class ShuffleEngine {
     /**
      * @property {Array<Song>} songs セットされた曲の配列(曲順はセットされた時点の順序)
      * @property {Array<Song>} generatedPlaylist シャッフルされた再生待ちの曲の配列
-     * @property {Array<Song>} waitingSongs 再生待ちの曲の配列を生成する際に使用する仮の配列
+     * @property {Array<Array<Song>>} waitingSongs 再生待ちの曲の配列を生成する際に使用する仮の配列
      * @property {boolean} isFirstRound 現在1巡目であるかどうかのフラグ
      */
     constructor () {
@@ -25,7 +25,7 @@ export class ShuffleEngine {
      * @property {Function} setSongs シャッフル対象の曲の配列をインスタンスに設定する関数
      * @param {Array<Song>} songs Songクラスのオブジェクトからなる配列
      * @returns {void}
-     * @throws {Exception} 配列以外のものが渡された場合や配列が空の場合はエラーを投げる
+     * @throws {Error} 配列以外のものが渡された場合や配列が空の場合はエラーを投げる
      */
     setSongs(songs) {
         try {

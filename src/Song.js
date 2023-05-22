@@ -6,7 +6,7 @@ export class Song {
     /**
      * @param {string} title 曲のタイトル
      * @param {string} [artist=Unknown Artist] アーティスト名
-     * @param {number} [id=null] ShuffleEngineで利用するid
+     * @param {?number} [id=null] ShuffleEngineで利用するid
      */
     constructor (title, artist="Unknown Artist", id=null) {
 
