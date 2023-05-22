@@ -1,8 +1,3 @@
-/**
- * @file ShuffleEngineを利用したReactコンポーネント
- * @author Miho Nakayama
- */
-
 import React, { useState } from "react";
 import { Song } from "./Song";
 import { ShuffleEngine } from "./ShuffleEngine";
